@@ -21,15 +21,16 @@ which can cause connectivity problems.
 
 ### How the fix works:
 
-Wifi connections are renewed after ~5-10 minutes. When the NIC changes
-it's MAC address twice, for scanning and reconnecting. This causes
-connectivity problems on some networks.
+Wifi connections are renewed after ~5-10 minutes. The NIC might change
+it's MAC address for this twice, once for scanning and once for
+reconnecting. This causes connectivity problems on some networks.
 
-The config file has the needed settings to fix this. It needs to be in
-the NetworkManager config directory, which defaults to
-`/etc/NetworkManager/conf.d`.
+`00-no-rand-mac.conf` has the needed settings to fix this. It needs to
+be in the NetworkManager config directory, which defaults to
+`/etc/NetworkManager/conf.d`. Without the NIC changing to a random MAC,
+the problem goes away.
 
 There is a chance that the settings are overwritten by other config
 files for NetworkManager. To prevent this, don't remove "00-" from
-the beginning of the configuration file name. This will ensures
-priority over other config files.
+the beginning of the configuration file name. This will ensure priority
+over other config files.
