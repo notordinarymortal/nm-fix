@@ -10,7 +10,10 @@ NIC=$(shell nmcli device status | awk '$$2 == "wifi" { print $$1; exit }')
 
 
 fix all install config:
-	@[ -e /sbin/NetworkManager ]
+	@ if ! [ -e /sbin/NetworkManager ]; then \
+		echo "[ERROR] NetworkManager is not installed!"; \
+		exit 1; fi
+
 	sudo cp $(CONFIG_FILE) $(CONF_DIR)
 	sudo systemctl restart NetworkManager
 
