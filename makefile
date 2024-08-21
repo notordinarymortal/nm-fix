@@ -1,6 +1,7 @@
 CONF_DIR=/etc/NetworkManager/conf.d
 CONFIG_FILE=00-no-rand-mac.conf
 LOG_STARTDATE=yesterday
+DEBUG_FILE=debug_output.txt
 
 # replace with the name of NIC you want the logs for, defaults to first
 # wifi NIC. you can find the name of the NICs in "nmcli device status"
@@ -31,3 +32,10 @@ show-config:
 
 log:
 	journalctl --unit NetworkManager.service --since $(LOG_STARTDATE) --no-hostname --grep="($(NIC))"
+
+
+debug-file:
+	@echo "===== CONFIG FILES =====" >> $(DEBUG_FILE)
+	make show-config --no-print-directory >> $(DEBUG_FILE)
+	@echo "===== LOGS =====" >> $(DEBUG_FILE)
+	make log --no-print-directory >> $(DEBUG_FILE)
