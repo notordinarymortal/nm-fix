@@ -1,5 +1,10 @@
 CONF_DIR=/etc/NetworkManager/conf.d
 CONFIG_FILE=00-no-rand-mac.conf
+LOG_STARTDATE=yesterday
+
+# replace with the name of NIC you want the logs for, defaults to first
+# wifi NIC. you can find the name of the NICs in "nmcli device status"
+NIC=$(shell nmcli device status | awk '$$2 == "wifi" { print $$1; exit }')
 
 
 
@@ -22,3 +27,7 @@ show-config:
 		awk '!/^#/ && NF' "$$file"; \
 		echo; \
 		done
+
+
+log:
+	journalctl --unit NetworkManager.service --since $(LOG_STARTDATE) --no-hostname --grep="($(NIC))"
