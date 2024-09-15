@@ -1,11 +1,6 @@
 This is a fix for a NetworkManager randomizing mac addresses for NICs
 which can cause connectivity problems.
 
-## WARNING
-Your IP address might be included if you create a debug file! You should
-have a look at what you upload and remove your IP address if it's in
-there!
-
 ### How to install fix:
 
 #### with cloning the git:

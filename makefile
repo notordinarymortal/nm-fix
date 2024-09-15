@@ -34,7 +34,10 @@ show-config:
 
 
 log:
-	journalctl --unit NetworkManager.service --since $(LOG_STARTDATE) --no-hostname --grep="($(NIC))"
+	# the sed line will censor any IPv4 address
+	# if you remove it, you'll also have to remove "\" from the line above
+	journalctl --unit NetworkManager.service --since $(LOG_STARTDATE) --no-hostname --grep="($(NIC))" | \
+		sed -E 's/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/XXX.XXX.XXX.XXX/g' 
 
 
 debug-file:
